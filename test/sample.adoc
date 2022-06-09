@@ -1,0 +1,43 @@
+= Test Document
+
+:source-highlighter: highlight.js
+:icons: font
+
+[source, ruby]
+----
+class ExternalCalloutTreeProcessor < Extensions::TreeProcessor
+
+  use_dsl
+
+  def process(document)
+
+    document.find_by context: :listing, style: 'source'.each do |src|
+
+      Open3.popen3 cmd do |stdin, stdout, _, wait_thr|
+        stdin.write src.source
+        stdin.close
+
+        result = []
+
+        while (line = stdout.gets)
+          result << line
+        end
+
+        result << 'Eureka'
+
+        src.lines.replace result
+        wait_thr.value
+
+      end
+
+    end
+
+  end
+
+end
+----
+. The `use_dsl` line @3
+. The process def at @5
+. Document object used at @5 @7
+. Result first used @/result/
+
