@@ -78,15 +78,31 @@ Asciidoctor::Extensions::register do
     # to find the block that our CO list belongs to
     def owning_block(list)
 
-      block_above = list.parent
+      list_parent = list.parent
 
-      raise "There is no block above the callout list" if block_above == nil
+      raise "There is no block above the callout list" if list_parent == nil
 
-      index_of_this_item = block_above.blocks.index { |x| x == list }
+      index_back = list_parent.blocks.index { |x| x == list }
 
-      raise "Callout list: the attached block is not a source listing" if block_above.blocks[index_of_this_item - 1].context != :listing
+      # We should be able to find our own block, but in case we can't …
+      raise "Error – could not locate our ordered list" if index_back == nil
 
-      block_above.blocks[index_of_this_item - 1]
+      while index_back > 0
+
+        index_back = index_back - 1
+
+        # We have found our matching block
+        return list_parent.blocks[index_back] if list_parent.blocks[index_back].context == :listing
+
+        # We have hit another callout list, but there was no list block first.
+        # Assume we have it an error
+        raise "Callout list found while seeking listing block" if list_parent.blocks[index_back].context == :colist
+
+      end
+
+      # If we didn't find a listing then this document has probably got
+       # bits missing.
+      raise "No listing found"
 
     end
 

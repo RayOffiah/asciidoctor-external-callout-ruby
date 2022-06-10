@@ -3,7 +3,7 @@
 module Asciidoctor
   module External
     module Callout
-      VERSION = "0.0.6-beta5"
+      VERSION = "0.0.6-beta6"
     end
   end
 end
