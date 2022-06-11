@@ -36,6 +36,21 @@ class ExternalCalloutTreeProcessor < Extensions::TreeProcessor
 
 end
 ----
+
+Can we add in an extra paragraph here?
+
+How about a table?
+
+|===
+| Header Cell 1 | Header Cell 2
+
+| Row 1 Cell 1
+| Row 1 Cell 2
+
+| Row 2 Cell 1
+| Row 2 Cell 2
+|===
+
 . The `use_dsl` line @3
 . The process def at @5
 . Document object used at @5 @7
