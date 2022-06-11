@@ -59,7 +59,7 @@ Asciidoctor::Extensions::register do
 
       list.blocks.all? do |x|
 
-        item_under_test = x.text
+        item_under_test = x.instance_variable_get(:@text)
         location_token_index = item_under_test.index(LOCATION_TOKEN_RX)
 
         # if we don't find the start of the list of location tokens, or the token is the first item
