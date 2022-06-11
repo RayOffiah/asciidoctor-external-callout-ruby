@@ -10,3 +10,4 @@
 **/sample.html
 *.gem
 /Gemfile.lock
+/.asciidoctor
