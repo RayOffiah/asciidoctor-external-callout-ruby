@@ -14,10 +14,10 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
   def test_basic_conversion
     document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample.adoc'), safe: :unsafe, backend: :html5
     assert document.instance_of? Document
-    assert_equal 2, document.blocks.length
-    assert_equal document.blocks[1].context, :colist
-    assert_equal 4, document.blocks[1].items.length
-    assert_equal 'The `use_dsl` line', document.blocks[1].items[0].instance_variable_get(:@text)
+    assert_equal 5, document.blocks.length
+    assert_equal document.blocks[1].context, :paragraph
+    assert_equal 4, document.blocks[4].items.length
+    assert_equal 'The `use_dsl` line', document.blocks[4].items[0].instance_variable_get(:@text)
   end
 
   def test_callout_marker

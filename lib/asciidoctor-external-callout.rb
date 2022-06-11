@@ -59,7 +59,7 @@ Asciidoctor::Extensions::register do
 
       list.blocks.all? do |x|
 
-        item_under_test = x.text
+        item_under_test = x.instance_variable_get(:@text)
         location_token_index = item_under_test.index(LOCATION_TOKEN_RX)
 
         # if we don't find the start of the list of location tokens, or the token is the first item
@@ -95,7 +95,7 @@ Asciidoctor::Extensions::register do
         return list_parent.blocks[index_back] if list_parent.blocks[index_back].context == :listing
 
         # We have hit another callout list, but there was no list block first.
-        # Assume we have it an error
+        # Assume we have an error
         raise "Callout list found while seeking listing block" if list_parent.blocks[index_back].context == :colist
 
       end
