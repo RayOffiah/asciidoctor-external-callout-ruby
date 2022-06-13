@@ -2,6 +2,11 @@
 
 Record of bug fixes, enhancements, and changes.
 
+## [0.0.8-beta8] – 22-06-16
+
+### Added
+- Added roles to the source block and the callout list so that CSS folk can pick them out to make style changes (For example, adjusting the gap between callout items in the source code block.)
+
 ## [0.0.6-beta6] – 2022-06-11
 
 ### Changed

@@ -18,6 +18,7 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
     assert_equal document.blocks[1].context, :paragraph
     assert_equal 4, document.blocks[4].items.length
     assert_equal 'The `use_dsl` line', document.blocks[4].items[0].instance_variable_get(:@text)
+    assert_equal true, document.blocks[4].has_role?('external-callout-list')
   end
 
   def test_callout_marker
