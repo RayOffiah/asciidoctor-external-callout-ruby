@@ -12,7 +12,9 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
   end
 
   def test_basic_conversion
-    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample.adoc'), safe: :unsafe, backend: :html5
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample.adoc'),
+                                        safe: :unsafe, backend: :html5,
+                                        attributes: {'stylesheet' => './callout.css'}
     assert document.instance_of? Document
     assert_equal 5, document.blocks.length
     assert_equal document.blocks[1].context, :paragraph
@@ -22,7 +24,10 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
   end
 
   def test_callout_marker
-    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample.adoc'), safe: :unsafe, backend: :html5
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample.adoc'),
+                                        safe: :unsafe, backend: :html5,
+                                        attributes: {'stylesheet' => './callout.css'}
+
     assert document.blocks[0].context == :listing
     assert document.blocks[0].lines.length == 30
     assert document.blocks[0].lines[2].include? 'use_dsl <1>'
