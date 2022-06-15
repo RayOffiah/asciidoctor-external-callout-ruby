@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["clogs-wrench-0z@icloud.com"]
 
   spec.summary       = "Asciidoc extension for adding callouts without marking up the source listing block."
-  # spec.description   = "TODO: Write a longer description or delete this line."
+  spec.description   = "If you can't add callout markers to your source listing" \
+ "(if you need to keep a shell script runnable for example), then use this."
   spec.homepage      = "https://github.com/RayOffiah/asciidoctor-external-callout-ruby"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")

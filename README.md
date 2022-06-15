@@ -80,7 +80,46 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To use the extension, you need to register it before calling one of the Asciidoc `convert` functions to render the output.
+
+```ruby
+require 'asciidoctor-external-callout'
+require 'asciidoctor'
+
+Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample.adoc'), safe: :unsafe, backend: :html5
+```
+
+## Use with the [IntelliJ Asciidoc Plugin](https://plugins.jetbrains.com/plugin/7391-asciidoc)
+
+If you're not using the excellent Asciidoc plugin then you're really missing out. 
+One if it's lesser known features is that it supports Asciidoc extensions written in Ruby:
+
+1. Create a new folder structure in the root of your IntelliJ project called `.asciidoctor/lib`.
+2. Copy the file `asciidoctor-external-calllout.rb` from this distribution to `.asciidoctor/lib`.
+
+Now, when you preview an Asciidoc file with the plugin enabled, external callouts will now show up in the preview.
+
+## Formatting
+
+By default, the callout extension will put a single space between callouts that occur on the same line. If you want to adjust this, then you need to create a style that puts a horizontal margin between the callouts:
+
+```css
+div.external-callout-block i.conum {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+```
+The callout attaches a class called `external-callout-block` to each source listing it processes. You can use this to differentiate between standard callouts, and callouts written by the extension.
+
+The extension also adds a class called `external-callout-list` to the list of definitions at the bottom of the source block. (There's probably no need to adjust the styling for this.)
+
+Then to convert a document with a stylesheet, use something like this:
+
+```ruby
+Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample.adoc'), 
+                         safe: :unsafe, backend: :html5,
+                         attributes: {'stylesheet' => './callout.css'}
+```
 
 ## Development
 

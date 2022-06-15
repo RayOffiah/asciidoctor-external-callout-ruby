@@ -15,6 +15,9 @@ include Asciidoctor
 
 Asciidoctor::Extensions::register do
 
+  CALLOUT_SOURCE_BLOCK_ROLE = 'external-callout-block'
+  CALLOUT_ORDERED_LIST_ROLE = 'external-callout-list'
+
   LOCATION_TOKEN_RX = /@(\d+)|@\/([^\/]+?)\//
   LOCATION_TOKEN_ARRAY_RX = /^(@\d+|@\/[^\/]+?\/)((\s+@\d+)|(\s+@\/[^\/]+?\/))*$/
 
@@ -36,6 +39,9 @@ Asciidoctor::Extensions::register do
             process_callouts(list, owner_block)
 
             list.context = :colist
+
+            owner_block.add_role(CALLOUT_SOURCE_BLOCK_ROLE) unless owner_block.has_role?(CALLOUT_SOURCE_BLOCK_ROLE)
+            list.add_role(CALLOUT_ORDERED_LIST_ROLE) unless list.has_role?(CALLOUT_ORDERED_LIST_ROLE)
 
           end
 
