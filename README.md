@@ -113,6 +113,14 @@ The callout attaches a class called `external-callout-block` to each source list
 
 The extension also adds a class called `external-callout-list` to the list of definitions at the bottom of the source block. (There's probably no need to adjust the styling for this.)
 
+Then to convert a document with a stylesheet, use something like this:
+
+```ruby
+Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample.adoc'), 
+                         safe: :unsafe, backend: :html5,
+                         attributes: {'stylesheet' => './callout.css'}
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
