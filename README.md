@@ -65,6 +65,12 @@ Using the text search method means that the location of the callout will move wi
 @/_text_/g
 : Works the same as the standard text search; the `g` flag means that callouts willl be added to _all_ the lines that match the search string, instead of just the first one.
 
+@/_text_/i
+: This is a case-insensitive search.
+
+@/_text_/gi
+: And of course, you can combine the two, though I'm not sure why you'd want to.
+
 ## Installation
 
 Add this line to your application's Gemfile:

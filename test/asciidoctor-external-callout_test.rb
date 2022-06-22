@@ -53,5 +53,25 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
 
   end
 
+  def test_case_insensitive_search
+
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample_global_search.adoc'),
+                                        safe: :unsafe, backend: :html5,
+                                        attributes: {'stylesheet' => './callout.css'}
+
+    assert document.blocks[0].context == :listing
+    assert document.blocks[0].lines.length == 30
+
+    # We should be doing a case-insensitive match for all occurrences of Stdin
+    document.blocks[0].lines.each do |line|
+
+      if line.include? 'stdin'
+        assert_equal true, line.include?('<4>')
+      end
+    end
+
+
+  end
+
 end
 
