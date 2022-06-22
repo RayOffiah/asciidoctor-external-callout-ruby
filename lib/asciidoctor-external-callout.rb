@@ -18,8 +18,8 @@ Asciidoctor::Extensions::register do
   CALLOUT_SOURCE_BLOCK_ROLE = 'external-callout-block'
   CALLOUT_ORDERED_LIST_ROLE = 'external-callout-list'
 
-  LOCATION_TOKEN_RX = /@(\d+)|(@\/[^\/]+?\/g?)/
-  LOCATION_TOKEN_ARRAY_RX = /^(@\d+|@\/[^\/]+?\/g?)((\s+@\d+)|(\s+@\/[^\/]+?\/g?))*$/
+  LOCATION_TOKEN_RX = /@(\d+)|(@\/[^\/]+?\/[ig]{0,2})/
+  LOCATION_TOKEN_ARRAY_RX = /^(@\d+|@\/[^\/]+?\/[ig]{0,2})((\s+@\d+)|(\s+@\/[^\/]+?\/[ig]{0,2}))*$/
 
   tree_processor do
 
@@ -159,9 +159,10 @@ Asciidoctor::Extensions::register do
             # Must be a string matcher then
 
             # Is this a global search?
-            global_search = location.end_with? '/g'
+            global_search = !!location.match(/\/([^\/]+?)\/.*g.*/)
+            case_insensitive = !!location.match(/\/([^\/]+?)\/.*i.*/)
             search_string = location[/\/([^\/]+?)\//, 1]
-            found_line_numbers = find_matching_lines(search_string, global_search, owner_block)
+            found_line_numbers = find_matching_lines(search_string, global_search, case_insensitive, owner_block)
 
             if !found_line_numbers.empty?
 
@@ -188,13 +189,18 @@ Asciidoctor::Extensions::register do
 
     end
 
-    def find_matching_lines(search_string, global_search, owner_block)
+    def find_matching_lines(search_string, global_search, case_insensitive, owner_block)
 
+      if case_insensitive
+        string_to_match = Regexp.new(search_string, Regexp::IGNORECASE)
+      else
+        string_to_match = Regexp.new(search_string)
+      end
       found_lines = Set.new
 
       owner_block.lines.each_with_index do |line, index|
 
-        if line.match(%r[#{search_string}]) != nil
+        if line.match(string_to_match) != nil
 
           found_lines << index
 
