@@ -18,8 +18,8 @@ Asciidoctor::Extensions::register do
   CALLOUT_SOURCE_BLOCK_ROLE = 'external-callout-block'
   CALLOUT_ORDERED_LIST_ROLE = 'external-callout-list'
 
-  LOCATION_TOKEN_RX = /@(\d+)|@\/([^\/]+?)\//
-  LOCATION_TOKEN_ARRAY_RX = /^(@\d+|@\/[^\/]+?\/)((\s+@\d+)|(\s+@\/[^\/]+?\/))*$/
+  LOCATION_TOKEN_RX = /@(\d+)|(@\/[^\/]+?\/g?)/
+  LOCATION_TOKEN_ARRAY_RX = /^(@\d+|@\/[^\/]+?\/g?)((\s+@\d+)|(\s+@\/[^\/]+?\/g?))*$/
 
   tree_processor do
 
@@ -146,23 +146,26 @@ Asciidoctor::Extensions::register do
 
           if location.is_numeric?
 
-            number = location.to_i
+            numbers = location.to_i
 
-            if number <= owner_block.lines.length
-              line_numbers << (number - 1)
+            if numbers <= owner_block.lines.length
+              line_numbers << (numbers - 1)
             else
-              warn "Out of range ==> #{number}"
+              warn "Out of range ==> #{numbers}"
             end
 
           else
 
             # Must be a string matcher then
 
-            number = find_matching_lines(location, owner_block)
+            # Is this a global search?
+            global_search = location.end_with? '/g'
+            search_string = location[/\/([^\/]+?)\//, 1]
+            found_line_numbers = find_matching_lines(search_string, global_search, owner_block)
 
-            if number != nil
+            if !found_line_numbers.empty?
 
-              line_numbers << number
+              line_numbers = line_numbers.merge(found_line_numbers)
 
             else
               warn "Search term not found ==> #{location}"
@@ -185,9 +188,23 @@ Asciidoctor::Extensions::register do
 
     end
 
-    def find_matching_lines(search_string, owner_block)
+    def find_matching_lines(search_string, global_search, owner_block)
 
-      owner_block.lines.index { |x| x.match(%r[#{search_string}]) }
+      found_lines = Set.new
+
+      owner_block.lines.each_with_index do |line, index|
+
+        if line.match(%r[#{search_string}]) != nil
+
+          found_lines << index
+
+          return found_lines unless global_search
+
+        end
+
+      end
+
+      found_lines
 
     end
 

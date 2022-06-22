@@ -54,5 +54,5 @@ How about a table?
 . The `use_dsl` line @3
 . The process def at @5
 . Document object used at @5 @7
-. Result first used @/result/
+. Result first used @/result/g
 
