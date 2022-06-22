@@ -2,7 +2,12 @@
 
 Record of bug fixes, enhancements, and changes.
 
-## [1.0.0] – 22-06-16
+## [1.1.0] – 2022-06-22
+
+## Added
+- The text search now supports a global flag (`@/text/g`). The `g` flag will add the callout to all the lines that match the search criteria. Use wisely.
+
+## [1.0.0] – 2022-06-16
 
 ### Added
 - Added roles to the source block and the callout list so that CSS folk can pick them out to make style changes (For example, adjusting the gap between callout items in the source code block.)

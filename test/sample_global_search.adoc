@@ -51,8 +51,7 @@ How about a table?
 | Row 2 Cell 2
 |===
 
-. The `use_dsl` line @3
-. The process def at @5
 . Document object used at @5 @7
 . Result first used @/result/
+. Look for src @/src/g
 
