@@ -2,9 +2,9 @@
 
 Record of bug fixes, enhancements, and changes.
 
-## [1.1.0] – 2022-06-22
+## [1.1.0] – 2022-06-23
 
-## Added
+### Added
 - The text search now supports a global flag (`@/text/g`). The `g` flag will add the callout to all the lines that match the search criteria. Use wisely.
 - Added the `i` flag for case-insensitive searches: (`@/text/i`). Again, don't go mad.
 
