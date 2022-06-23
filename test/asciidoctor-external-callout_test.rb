@@ -32,5 +32,46 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
     assert document.blocks[0].lines.length == 30
     assert document.blocks[0].lines[2].include? 'use_dsl <1>'
   end
+
+  def test_global_search
+
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample_global_search.adoc'),
+                                        safe: :unsafe, backend: :html5,
+                                        attributes: {'stylesheet' => './callout.css'}
+
+    assert document.blocks[0].context == :listing
+    assert document.blocks[0].lines.length == 30
+
+    # Every line that contains that contains the phrase 'src' should also
+    # contain a callout marker.
+    document.blocks[0].lines.each do |line|
+
+      if line.include? 'src'
+        assert_equal true, line.include?('<3>')
+      end
+    end
+
+  end
+
+  def test_case_insensitive_search
+
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample_global_search.adoc'),
+                                        safe: :unsafe, backend: :html5,
+                                        attributes: {'stylesheet' => './callout.css'}
+
+    assert document.blocks[0].context == :listing
+    assert document.blocks[0].lines.length == 30
+
+    # We should be doing a case-insensitive match for all occurrences of Stdin
+    document.blocks[0].lines.each do |line|
+
+      if line.include? 'stdin'
+        assert_equal true, line.include?('<4>')
+      end
+    end
+
+
+  end
+
 end
 
