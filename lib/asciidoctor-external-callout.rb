@@ -19,7 +19,7 @@ Asciidoctor::Extensions::register do
   CALLOUT_ORDERED_LIST_ROLE = 'external-callout-list'
 
   LOCATION_TOKEN_RX = /@(\d+)|(@\/[^\/]+?\/(?:i|g|gi|ig){0,2})/
-  LOCATION_TOKEN_ARRAY_RX = /^(@\d+|@\/[^\/]+?\/(i|g|gi|ig){0,2})((\s+@\d+)|(\s+@\/[^\/]+?\/i|g|gi|ig{0,2}))*$/
+  LOCATION_TOKEN_ARRAY_RX = /^(@\d+|@\/[^\/]+?\/(i|g|gi|ig){0,2})((\s+@\d+)|(\s+@\/[^\/]+?\/(i|g|gi|ig){0,2}))*$/
 
   tree_processor do
 

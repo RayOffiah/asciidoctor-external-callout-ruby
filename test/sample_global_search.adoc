@@ -52,7 +52,7 @@ How about a table?
 |===
 
 . Document object used at @5 @7
-. Result first used @/result/
+. Result first used @/result/i @1
 . Look for src @/src/g
 . Seek out stdin with case check @/Stdin/ig
 

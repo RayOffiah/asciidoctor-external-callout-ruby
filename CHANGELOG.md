@@ -2,6 +2,11 @@
 
 Record of bug fixes, enhancements, and changes.
 
+## [1.1.1] – 2022-06-23
+
+### Fixed
+- Fixed regular expression to correctly detect new flags.
+
 ## [1.1.0] – 2022-06-23
 
 ### Added
