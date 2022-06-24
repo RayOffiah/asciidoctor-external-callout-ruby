@@ -18,7 +18,7 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
     assert document.instance_of? Document
     assert_equal 5, document.blocks.length
     assert_equal document.blocks[1].context, :paragraph
-    assert_equal 4, document.blocks[4].items.length
+    assert_equal 6, document.blocks[4].items.length
     assert_equal 'The `use_dsl` line', document.blocks[4].items[0].instance_variable_get(:@text)
     assert_equal true, document.blocks[4].has_role?('external-callout-list')
   end
@@ -73,5 +73,22 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
 
   end
 
+  def test_for_line_zero
+
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample_global_search.adoc'),
+                                        safe: :unsafe, backend: :html5,
+                                        attributes: {'stylesheet' => './callout.css'}
+
+    assert document.blocks[0].context == :listing
+    assert document.blocks[0].lines.length == 30
+
+    # No line should contain a callout for 5, because the
+    # token is set for line 0
+    # No line should have a callout for 6, because the
+    # token is set for line 500.
+
+    assert_equal false,  document.blocks[0].lines.any? {|line| line.include? '<5>' or line.include? '<6>'}
+
+  end
 end
 

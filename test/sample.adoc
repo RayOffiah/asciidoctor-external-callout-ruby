@@ -55,4 +55,6 @@ How about a table?
 . The process def at @5
 . Document object used at @5 @7
 . Result first used @/result/
+. There is no line zero @0
+. There is no line five hundred @500
 

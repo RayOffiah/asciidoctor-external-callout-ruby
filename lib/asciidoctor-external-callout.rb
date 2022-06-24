@@ -146,12 +146,12 @@ Asciidoctor::Extensions::register do
 
           if location.is_numeric?
 
-            numbers = location.to_i
+            line_number = location.to_i
 
-            if numbers <= owner_block.lines.length
-              line_numbers << (numbers - 1)
+            if line_number.between?(1, owner_block.lines.length)
+              line_numbers << (line_number - 1)  # Because the line number is now an array index, so -1
             else
-              warn "Out of range ==> #{numbers}"
+              warn "Line number out of range ==> #{line_number}"
             end
 
           else
