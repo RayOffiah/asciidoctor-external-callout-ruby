@@ -9,6 +9,7 @@
 /.idea
 **/sample.html
 **/sample_global_search.html
+**/sample.pdf
 *.gem
 /Gemfile.lock
 /.asciidoctor
