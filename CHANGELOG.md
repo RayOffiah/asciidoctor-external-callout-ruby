@@ -2,6 +2,11 @@
 
 Record of bug fixes, enhancements, and changes.
 
+## [1.1.2] – 2022-07-07
+
+### Fixed
+- Code fix to stop the constants from reloading every time the extension is run. (Tidying up for execution inside the Asciidoc plugin)
+
 ## [1.1.1] – 2022-06-23
 
 ### Fixed
