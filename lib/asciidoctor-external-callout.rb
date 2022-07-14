@@ -228,8 +228,7 @@ Asciidoctor::Extensions::register do
       # This is just for completeness, but make sure that
       # none of the options are mentioned twice in the list
 
-      match_array = matches[1].split ""
-      raise "Invalid search options: #{matches[1]}" if match_array.uniq.length != match_array.length
+      raise "Invalid search options: #{matches[1]}" if matches[1].match /^(.).*\1$/
 
       options[:case_insensitive] = true if matches[1].include? 'i'
       options[:global_search] = true if matches[1].include? 'g'

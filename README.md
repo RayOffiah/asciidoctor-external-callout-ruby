@@ -53,22 +53,21 @@ Rather than tagging the code, you add a location token at the end of a list item
 
 Two types of location token are supported:
 
-@_number_
+**@_number_**
 : This format takes a numeric value indicating the line in the source block where the callout should appear. The callouts will appear at the end of the line. Multiple callouts on the same line will have a single space between them.
 
-
-@/_text_/
+**@/_text_/**
 : The text between the two slashes will be used in a regex search. A callout will be placed at the end of the first matching line.
 If you have a large listing then it may be preferable to use the text search rather than counting all the lines. It may also be preferable to use a smaller listing, as a long listing might mean that your description is a bit too general. +
 Using the text search method means that the location of the callout will move with the line; handy if you're referencing a source file that might get the occasional tweak outside your control.
 
-@/_text_/g
+**@/_text_/g**
 : Works the same as the standard text search; the `g` flag means that callouts willl be added to _all_ the lines that match the search string, instead of just the first one.
 
-@/_text_/i
+**@/_text_/i**
 : This is a case-insensitive search.
 
-@/_text_/gi
+**@/_text_/gi**
 : And of course, you can combine the two, though I'm not sure why you'd want to.
 
 ## Installation
