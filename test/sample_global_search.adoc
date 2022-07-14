@@ -55,6 +55,7 @@ How about a table?
 . Result first used @/result/i @1
 . Look for src @/src/g
 . Seek out stdin with case check @/Stdin/ig
-. Calluot with line zero @0
+. Callout with line zero @0
 . Seek out an escaped slash @/Eur\/eka/ @/sou\/rce/
+
 

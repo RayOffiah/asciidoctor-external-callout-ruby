@@ -18,12 +18,11 @@ Asciidoctor::Extensions::register do
   CALLOUT_SOURCE_BLOCK_ROLE ||= 'external-callout-block'
   CALLOUT_ORDERED_LIST_ROLE ||= 'external-callout-list'
 
-  LOCATION_TOKEN_RX ||= /@(\d+)|(@\/(?:\\\/|[^\/])+?\/(?:i|g|gi|ig){0,2})/
-  LOCATION_TOKEN_ARRAY_RX ||= /^(@\d+|@\/(?:\\\/|[^\/]|)+?\/(i|g|gi|ig){0,2})((\s+@\d+)|(\s+@\/(?:\\\/|[^\/]|)+?\/(i|g|gi|ig){0,2}))*$/
+  LOCATION_TOKEN_RX ||= /@(\d+)|(@\/(?:\\\/|[^\/])+?\/[ig]{0,2})/
+  LOCATION_TOKEN_ARRAY_RX ||= /^(@\d+|@\/(?:\\\/|[^\/]|)+?\/[ig]{0,2})((\s+@\d+)|(\s+@\/(?:\\\/|[^\/]|)+?\/[ig]{0,2}))*$/
 
-  GLOBAL_FLAG_RX ||= /\/((?:\\\/|[^\/])+?)\/.*g.*/
-  CASE_INSENSITIVE_FLAG ||= /\/((?:\\\/|[^\/])+?)\/.*i.*/
   SEARCH_STRING_RX ||= /\/((?:\\\/|[^\/])+?)\//
+  SEARCH_OPTIONS_RX ||= /\/(?:\\\/|[^\/])+?\/([ig]{0,2})/
 
   tree_processor do
 
@@ -161,12 +160,11 @@ Asciidoctor::Extensions::register do
           else
 
             # Must be a string matcher then
+            search_options = get_search_options location
 
-            # Is this a global search?
-            global_search = !!location.match(GLOBAL_FLAG_RX)
-            case_insensitive = !!location.match(CASE_INSENSITIVE_FLAG)
             search_string = location[SEARCH_STRING_RX, 1]
-            found_line_numbers = find_matching_lines(search_string, global_search, case_insensitive, owner_block)
+            found_line_numbers = find_matching_lines(search_string, search_options[:global_search],
+                                                     search_options[:case_insensitive], owner_block)
 
             if !found_line_numbers.empty?
 
@@ -215,6 +213,28 @@ Asciidoctor::Extensions::register do
       end
 
       found_lines
+
+    end
+
+    def get_search_options(location)
+
+      options = { :case_insensitive => false,
+                  :global_search => false }
+
+      matches = location.match(SEARCH_OPTIONS_RX)
+
+      return options unless matches
+
+      # This is just for completeness, but make sure that
+      # none of the options are mentioned twice in the list
+
+      match_array = matches[1].split ""
+      raise "Invalid search options: #{matches[1]}" if match_array.uniq.length != match_array.length
+
+      options[:case_insensitive] = true if matches[1].include? 'i'
+      options[:global_search] = true if matches[1].include? 'g'
+
+      return options
 
     end
 

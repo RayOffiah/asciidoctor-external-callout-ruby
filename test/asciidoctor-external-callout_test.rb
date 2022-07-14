@@ -107,5 +107,6 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
 
     end
   end
+
 end
 
