@@ -82,13 +82,30 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
     assert document.blocks[0].context == :listing
     assert document.blocks[0].lines.length == 30
 
-    # No line should contain a callout for 5, because the
-    # token is set for line 0
     # No line should have a callout for 6, because the
     # token is set for line 500.
 
-    assert_equal false,  document.blocks[0].lines.any? {|line| line.include? '<5>' or line.include? '<6>'}
+    assert_equal false,  document.blocks[0].lines.any? {|line| line.include? '<5>'}
 
+  end
+
+  def test_for_escaped_slash
+
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample_global_search.adoc'),
+                                        safe: :unsafe, backend: :html5,
+                                        attributes: {'stylesheet' => './callout.css'}
+
+    assert document.blocks[0].context == :listing
+    assert document.blocks[0].lines.length == 30
+
+    # Make sure that the line with
+    # slashes in them have been marked with
+
+    assert_equal true, document.blocks[0].lines.any? do |line|
+
+      line.include? '<6>' and line.include? 'Eur/eka' or line.include? 'sou/rce'
+
+    end
   end
 end
 

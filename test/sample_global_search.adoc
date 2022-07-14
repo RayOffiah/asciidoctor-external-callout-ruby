@@ -11,7 +11,7 @@ class ExternalCalloutTreeProcessor < Extensions::TreeProcessor
 
   def process(document)
 
-    document.find_by context: :listing, style: 'source'.each do |src|
+    document.find_by context: :listing, style: 'sou/rce'.each do |src|
 
       Open3.popen3 cmd do |stdin, stdout, _, wait_thr|
         stdin.write src.source
@@ -23,7 +23,7 @@ class ExternalCalloutTreeProcessor < Extensions::TreeProcessor
           result << line
         end
 
-        result << 'Eureka'
+        result << 'Eur/eka'
 
         src.lines.replace result
         wait_thr.value
@@ -55,4 +55,6 @@ How about a table?
 . Result first used @/result/i @1
 . Look for src @/src/g
 . Seek out stdin with case check @/Stdin/ig
+. Calluot with line zero @0
+. Seek out an escaped slash @/Eur\/eka/ @/sou\/rce/
 

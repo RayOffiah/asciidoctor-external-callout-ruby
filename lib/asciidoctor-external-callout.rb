@@ -18,8 +18,12 @@ Asciidoctor::Extensions::register do
   CALLOUT_SOURCE_BLOCK_ROLE ||= 'external-callout-block'
   CALLOUT_ORDERED_LIST_ROLE ||= 'external-callout-list'
 
-  LOCATION_TOKEN_RX ||= /@(\d+)|(@\/[^\/]+?\/(?:i|g|gi|ig){0,2})/
-  LOCATION_TOKEN_ARRAY_RX ||= /^(@\d+|@\/[^\/]+?\/(i|g|gi|ig){0,2})((\s+@\d+)|(\s+@\/[^\/]+?\/(i|g|gi|ig){0,2}))*$/
+  LOCATION_TOKEN_RX ||= /@(\d+)|(@\/(?:\\\/|[^\/])+?\/(?:i|g|gi|ig){0,2})/
+  LOCATION_TOKEN_ARRAY_RX ||= /^(@\d+|@\/(?:\\\/|[^\/]|)+?\/(i|g|gi|ig){0,2})((\s+@\d+)|(\s+@\/(?:\\\/|[^\/]|)+?\/(i|g|gi|ig){0,2}))*$/
+
+  GLOBAL_FLAG_RX ||= /\/((?:\\\/|[^\/])+?)\/.*g.*/
+  CASE_INSENSITIVE_FLAG ||= /\/((?:\\\/|[^\/])+?)\/.*i.*/
+  SEARCH_STRING_RX ||= /\/((?:\\\/|[^\/])+?)\//
 
   tree_processor do
 
@@ -159,9 +163,9 @@ Asciidoctor::Extensions::register do
             # Must be a string matcher then
 
             # Is this a global search?
-            global_search = !!location.match(/\/([^\/]+?)\/.*g.*/)
-            case_insensitive = !!location.match(/\/([^\/]+?)\/.*i.*/)
-            search_string = location[/\/([^\/]+?)\//, 1]
+            global_search = !!location.match(GLOBAL_FLAG_RX)
+            case_insensitive = !!location.match(CASE_INSENSITIVE_FLAG)
+            search_string = location[SEARCH_STRING_RX, 1]
             found_line_numbers = find_matching_lines(search_string, global_search, case_insensitive, owner_block)
 
             if !found_line_numbers.empty?
