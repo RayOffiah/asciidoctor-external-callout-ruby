@@ -2,10 +2,14 @@
 
 Record of bug fixes, enhancements, and changes.
 
+## [1.2.0] – 2022-07-30
+
+### Added
+- If you add the role `[calloutlist]` to an ordered list then it will be styled to look like a callout list. This allows you to add callouts to annotated images etc. 
+
 ## [1.1.3] – 2022-07-07-16
 
 ### Fixed
-
 - The global and case-insensitive flags (ig) are now parsing correctly: using ii or gg will cause prevent the callout block from being processed. Thanks to Hakim Cassimally for finding the bug.
 - Escaped slash characters were not being processed in the search.  Thanks to Hakim Cassimally for finding the bug.
 

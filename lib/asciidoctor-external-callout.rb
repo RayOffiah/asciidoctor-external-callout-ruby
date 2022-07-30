@@ -18,6 +18,8 @@ Asciidoctor::Extensions::register do
   CALLOUT_SOURCE_BLOCK_ROLE ||= 'external-callout-block'
   CALLOUT_ORDERED_LIST_ROLE ||= 'external-callout-list'
 
+  STANDALONE_CALLOUT_LIST_STYLE ||= 'calloutlist'
+
   LOCATION_TOKEN_RX ||= /@(\d+)|(@\/(?:\\\/|[^\/])+?\/[ig]{0,2})/
   LOCATION_TOKEN_ARRAY_RX ||= /^(@\d+|@\/(?:\\\/|[^\/]|)+?\/[ig]{0,2})((\s+@\d+)|(\s+@\/(?:\\\/|[^\/]|)+?\/[ig]{0,2}))*$/
 
@@ -33,18 +35,30 @@ Asciidoctor::Extensions::register do
         # The makes sure it's the right kind of list.
         document.find_by context: :olist do |list|
 
-          if external_callout_list? list
+          # if there is as calloutlist style attached to the block
+          # then simply style the block as a colist. This will allow folk
+          # to create callout blocks that can be attached to annotated images etc.
 
-            owner_block = owning_block list
-
-            owner_block.subs.replace(owner_block.subs + [:callouts]).uniq
-
-            process_callouts(list, owner_block)
+          if list.style.include? STANDALONE_CALLOUT_LIST_STYLE
 
             list.context = :colist
 
-            owner_block.add_role(CALLOUT_SOURCE_BLOCK_ROLE) unless owner_block.has_role?(CALLOUT_SOURCE_BLOCK_ROLE)
-            list.add_role(CALLOUT_ORDERED_LIST_ROLE) unless list.has_role?(CALLOUT_ORDERED_LIST_ROLE)
+          else
+
+            if external_callout_list? list
+
+              owner_block = owning_block list
+
+              owner_block.subs.replace(owner_block.subs + [:callouts]).uniq
+
+              process_callouts(list, owner_block)
+
+              list.context = :colist
+
+              owner_block.add_role(CALLOUT_SOURCE_BLOCK_ROLE) unless owner_block.has_role?(CALLOUT_SOURCE_BLOCK_ROLE)
+              list.add_role(CALLOUT_ORDERED_LIST_ROLE) unless list.has_role?(CALLOUT_ORDERED_LIST_ROLE)
+
+            end
 
           end
 

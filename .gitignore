@@ -7,10 +7,8 @@
 /spec/reports/
 /tmp/
 /.idea
-**/sample.html
-**/sample_global_search.html
-**/callout-list-block-sample.html
-**/sample.pdf
+/test/*.html
+/test/*.pdf
 *.gem
 /Gemfile.lock
 /.asciidoctor

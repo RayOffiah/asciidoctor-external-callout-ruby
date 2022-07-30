@@ -70,6 +70,14 @@ Using the text search method means that the location of the callout will move wi
 **@/_text_/gi**
 : And of course, you can combine the two, though I'm not sure why you'd want to.
 
+## Standalone callout lists
+You can create a standalone callout list by adding the `calloutlist` role to an ordered list. This simply styles the list to make it look like a list of callouts so you can use it as a reference to annoted images etc.
+```asciidoc
+[calloutlist]
+. This list can be used to add references to annotated images
+. The list will look like a standard callout list.
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
