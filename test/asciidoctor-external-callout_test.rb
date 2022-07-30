@@ -108,5 +108,16 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
     end
   end
 
+  def test_for_standalone_callout
+
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'standalone-callout-sample.adoc'),
+                                        safe: :unsafe, backend: :html5,
+                                        attributes: {'stylesheet' => './callout.css'}
+
+
+    assert document.blocks[document.blocks.length - 1].context = :colist
+
+  end
+
 end
 
