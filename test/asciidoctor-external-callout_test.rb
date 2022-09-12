@@ -35,7 +35,7 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
 
   def test_global_search
 
-    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample_global_search.adoc'),
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample-global-search.adoc'),
                                         safe: :unsafe, backend: :html5,
                                         attributes: {'stylesheet' => './callout.css'}
 
@@ -55,7 +55,7 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
 
   def test_case_insensitive_search
 
-    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample_global_search.adoc'),
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample-global-search.adoc'),
                                         safe: :unsafe, backend: :html5,
                                         attributes: {'stylesheet' => './callout.css'}
 
@@ -75,7 +75,7 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
 
   def test_for_line_zero
 
-    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample_global_search.adoc'),
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample-global-search.adoc'),
                                         safe: :unsafe, backend: :html5,
                                         attributes: {'stylesheet' => './callout.css'}
 
@@ -91,7 +91,7 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
 
   def test_for_escaped_slash
 
-    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample_global_search.adoc'),
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample-global-search.adoc'),
                                         safe: :unsafe, backend: :html5,
                                         attributes: {'stylesheet' => './callout.css'}
 
