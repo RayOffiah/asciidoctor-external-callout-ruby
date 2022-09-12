@@ -49,9 +49,7 @@ Asciidoctor::Extensions::register do
 
               owner_block = owning_block list
 
-            raise "There is owning block for this callout list" if owner_block == nil
-
-            owner_block.subs.replace(owner_block.subs + [:callouts]).uniq
+              owner_block.subs.replace(owner_block.subs + [:callouts]).uniq
 
               process_callouts(list, owner_block)
 
@@ -117,9 +115,7 @@ Asciidoctor::Extensions::register do
         index_back = index_back - 1
 
         # We have found our matching block
-
-        nearest_list_block = find_nearest_listing_block(list_parent.blocks[index_back])
-        return nearest_list_block if nearest_list_block != nil
+        return list_parent.blocks[index_back] if list_parent.blocks[index_back].context == :listing
 
         # We have hit another callout list, but there was no list block first.
         # Assume we have an error
@@ -130,22 +126,6 @@ Asciidoctor::Extensions::register do
       # If we didn't find a listing then this document has probably got
       # bits missing.
       raise "No listing found"
-
-    end
-
-    def find_nearest_listing_block(block)
-
-      return block if block.context == :listing
-
-      # return the last listing block of any descendents?
-
-      listing_blocks = block.find_by context: :listing
-
-      if listing_blocks.empty?
-        return nil
-      else
-        return listing_blocks[-1]
-      end
 
     end
 
@@ -280,6 +260,7 @@ Asciidoctor::Extensions::register do
   end
 
 end
+
 
 
 
