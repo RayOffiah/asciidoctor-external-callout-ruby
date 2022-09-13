@@ -47,7 +47,7 @@ Asciidoctor::Extensions::register do
 
             if external_callout_list? list
 
-              owner_block = owning_block list
+              owner_block = owning_block document, list
 
               owner_block.subs.replace(owner_block.subs + [:callouts]).uniq
 
@@ -99,13 +99,13 @@ Asciidoctor::Extensions::register do
 
     # Have a look at the next level up
     # to find the block that our CO list belongs to
-    def owning_block(list)
+    def owning_block(document, list)
 
-      list_parent = list.parent
+      all_blocks = document.find_by
 
-      raise "There is no block above the callout list" if list_parent == nil
+      raise "There are no available blocks" if all_blocks == nil
 
-      index_back = list_parent.blocks.index { |x| x == list }
+      index_back = all_blocks.index { |x| x == list }
 
       # We should be able to find our own block, but in case we can't …
       raise "Error – could not locate our ordered list" if index_back == nil
@@ -115,11 +115,11 @@ Asciidoctor::Extensions::register do
         index_back = index_back - 1
 
         # We have found our matching block
-        return list_parent.blocks[index_back] if list_parent.blocks[index_back].context == :listing
+        return all_blocks[index_back] if all_blocks[index_back].context == :listing
 
         # We have hit another callout list, but there was no list block first.
         # Assume we have an error
-        raise "Callout list found while seeking listing block" if list_parent.blocks[index_back].context == :colist
+        raise "Callout list found while seeking listing block" if all_blocks[index_back].context == :colist
 
       end
 

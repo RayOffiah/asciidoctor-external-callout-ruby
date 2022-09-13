@@ -119,5 +119,27 @@ class AsciiDoctorExternalCalloutTest < Minitest::Test
 
   end
 
+  def test_for_nested_source_block
+
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'nested-sample.adoc'),
+                                        safe: :unsafe, backend: :html5,
+                                        attributes: {'stylesheet' => './callout.css'}
+
+
+    assert document.blocks[document.blocks.length - 1].context = :colist
+
+  end
+
+  def test_for_broken_seq
+
+    document = Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'interrupted-nested-sample.adoc'),
+                                        safe: :unsafe, backend: :html5,
+                                        attributes: {'stylesheet' => './callout.css'}
+
+
+    assert document.blocks[document.blocks.length - 1].context != :colist
+    assert document.blocks[document.blocks.length - 2].context = :colist
+
+  end
 end
 
