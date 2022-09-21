@@ -28,7 +28,7 @@ end
 Great, but it does mean you have to add commented to the tags to the source code to register the callout in the following block. As I've said, this is fine, 99% of the time, but I've run across a few occasions when adding tags to the source code (either in-line or an included file) can be a little problematic:
 
 1. Restricted access to the source code: as a humble tech-writer, you might not have access to the included source code to add your own tags.
-1. The source code has to remain runnable, but doesn't have a commenting mechanism that works well with Asciidoc (shell scripts amd json files spring to mind.)
+2. The source code has to remain runnable, but doesn't have a commenting mechanism that works well with Asciidoc (shell scripts amd json files spring to mind.)
 
 ## A possible Solution
 
@@ -46,7 +46,6 @@ end
 . Library import @3
 . URL mapping @5
 . Response block @5
------
 ```
 
 Rather than tagging the code, you add a location token at the end of a list item, which will then add the tag at the specified line number. Run the source text through Asciidoctor+extension, and it'll spit the same source block complete with callouts.
@@ -62,7 +61,7 @@ If you have a large listing then it may be preferable to use the text search rat
 Using the text search method means that the location of the callout will move with the line; handy if you're referencing a source file that might get the occasional tweak outside your control.
 
 **@/_text_/g**
-: Works the same as the standard text search; the `g` flag means that callouts willl be added to _all_ the lines that match the search string, instead of just the first one.
+: Works the same as the standard text search; the `g` flag means that callouts will be added to _all_ the lines that match the search string, instead of just the first one.
 
 **@/_text_/i**
 : This is a case-insensitive search.
@@ -108,7 +107,7 @@ Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample.adoc'), safe:
 ## Use with the [IntelliJ Asciidoc Plugin](https://plugins.jetbrains.com/plugin/7391-asciidoc)
 
 If you're not using the excellent Asciidoc plugin then you're really missing out. 
-One if it's lesser known features is that it supports Asciidoc extensions written in Ruby:
+One if its lesser known features is that it supports Asciidoc extensions written in Ruby:
 
 1. Create a new folder structure in the root of your IntelliJ project called `.asciidoctor/lib`.
 2. Copy the file `asciidoctor-external-calllout.rb` from this distribution to `.asciidoctor/lib`.
