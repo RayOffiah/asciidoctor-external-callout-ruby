@@ -6,7 +6,7 @@ An [Asciidoctor](https://asciidoctor.org/) extension which adds support for call
 
 ## Motivation
 
-Aside from getting little practice around  Ruby and JavaScript, I decided to have a crack at this to help with a problem that comes up at work every so often.
+Aside from getting little practice around Ruby and JavaScript, I decided to have a crack at this to help with a problem that comes up at work every so often.
 
 The [callout mechanism](https://docs.asciidoctor.org/asciidoc/latest/verbatim/callouts/) for Asciidoc works extremely well in 99% of the cases I run into:
 
@@ -48,7 +48,7 @@ end
 . Response block @5
 ```
 
-Rather than tagging the code, you add a location token at the end of a list item, which will then add the tag at the specified line number. Run the source text through Asciidoctor+extension, and it'll spit the same source block complete with callouts.
+Rather than tagging the code, you add a location token at the end of a list item, which will then add the tag at the specified line number. Run the source text through Asciidoctor+extension, and it'll split the same source block complete with callouts.
 
 Two types of location token are supported:
 
@@ -57,7 +57,7 @@ Two types of location token are supported:
 
 **@/_text_/**
 : The text between the two slashes will be used in a regex search. A callout will be placed at the end of the first matching line.
-If you have a large listing then it may be preferable to use the text search rather than counting all the lines. It may also be preferable to use a smaller listing, as a long listing might mean that your description is a bit too general. +
+If you have a large listing, then it may be preferable to use the text search rather than counting all the lines. It may also be preferable to use a smaller listing, as a long listing might mean that your description is a bit too general. +
 Using the text search method means that the location of the callout will move with the line; handy if you're referencing a source file that might get the occasional tweak outside your control.
 
 **@/_text_/g**
@@ -70,7 +70,8 @@ Using the text search method means that the location of the callout will move wi
 : And of course, you can combine the two, though I'm not sure why you'd want to.
 
 ## Standalone callout lists
-You can create a standalone callout list by adding the `calloutlist` role to an ordered list. This simply styles the list to make it look like a list of callouts so you can use it as a reference to annoted images etc.
+You can create a standalone callout list by adding the `calloutlist` role to an ordered list. 
+This simply styles the list to make it look like a list of callouts, so you can use it as a reference to annoted images etc.
 ```asciidoc
 [calloutlist]
 . This list can be used to add references to annotated images
@@ -104,10 +105,10 @@ require 'asciidoctor'
 Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample.adoc'), safe: :unsafe, backend: :html5
 ```
 
-## Use with the [IntelliJ Asciidoc Plugin](https://plugins.jetbrains.com/plugin/7391-asciidoc)
+## Use the [IntelliJ Asciidoc Plugin](https://plugins.jetbrains.com/plugin/7391-asciidoc)
 
-If you're not using the excellent Asciidoc plugin then you're really missing out. 
-One if its lesser known features is that it supports Asciidoc extensions written in Ruby:
+If you're not using the excellent Asciidoc plugin, then you're really missing out. 
+One of its lesser known features is that it supports Asciidoc extensions written in Ruby:
 
 1. Create a new folder structure in the root of your IntelliJ project called `.asciidoctor/lib`.
 2. Copy the file `asciidoctor-external-calllout.rb` from this distribution to `.asciidoctor/lib`.
@@ -128,7 +129,7 @@ The callout attaches a class called `external-callout-block` to each source list
 
 The extension also adds a class called `external-callout-list` to the list of definitions at the bottom of the source block. (There's probably no need to adjust the styling for this.)
 
-Then to convert a document with a stylesheet, use something like this:
+To convert a document with a stylesheet, use something like this:
 
 ```ruby
 Asciidoctor.convert_file File.join(File.dirname(__FILE__), 'sample.adoc'), 
@@ -144,7 +145,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The gem is open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Code of Conduct
 
